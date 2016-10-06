@@ -10,6 +10,7 @@ import fileRoutes from './resources/files/routes';
 import orderRoutes from './resources/orders/routes';
 import productRoutes from './resources/products/routes';
 import userRoutes from './resources/users/routes';
+import chargeRoutes from './resources/charges/routes';
 
 const routePrefix = config.app.routePrefix || '';
 
@@ -22,5 +23,6 @@ export default buildRoutes({
     [`${routePrefix}/v1/files`]: fileRoutes,
     [`${routePrefix}/v1/orders`]: orderRoutes,
     [`${routePrefix}/v1/products`]: productRoutes,
-    [`${routePrefix}/v1/users`]: userRoutes
+    [`${routePrefix}/v1/users`]: userRoutes,
+    [`${routePrefix}/v1/charges`]: chargeRoutes
 });
