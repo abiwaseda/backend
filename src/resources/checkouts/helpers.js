@@ -13,14 +13,14 @@ async function isReady(checkout) {
 
     // Checkpoints
     let hasCustomerDetails = false;
-    let hasShippingInformation = false;
-    let hasBillingInformation = false;
+    let hasShippingInformation = true; //true when no validation
+    let hasBillingInformation = true; //true when no validation
 
     // Check customer detail
     if (checkout.userId || (checkout.customer && checkout.customer.name && checkout.customer.email)) {
         hasCustomerDetails = true;
     }
-
+/*
     // Check shipping information
     if (Object.keys(checkout.shippingAddress).length > 0 && checkout.shippingMethod && checkout.shippingMethod !== '') {
         hasShippingInformation = true;
@@ -30,7 +30,7 @@ async function isReady(checkout) {
     if (Object.keys(checkout.billingAddress).length > 0 && checkout.paymentMethod && checkout.paymentMethod !== '') {
         hasBillingInformation = true;
     }
-    
+*/
     // Check product availability
     let hasStock = await Product.hasStock(checkout.cart);
 

@@ -5,7 +5,7 @@ export default {
         host: '0.0.0.0',
         port: 8000,
         jwtKey: 'FewCgX4qncK832wROx1zbjSRZ4PJZofPV0ChgtIrbXs=',
-        defaultCurrency: 'EUR'
+        defaultCurrency: 'JPY'
     },
     database: {
         servers: [
@@ -32,12 +32,12 @@ export default {
     },
     emails: {
         from: {
-            name: 'Nicistore.com',
-            email: 'vendas@nicistore.com'
+            name: 'yamacity.com',
+            email: 'support@yamacity.com'
         }
     },
     storefront: {
-        label: 'nicistore.com',
+        label: 'yamacity.com',
         baseUrl: 'http://localhost:3000',
         defaultLocale: 'pt'
     },
@@ -46,6 +46,10 @@ export default {
         baseUrl: 'https://api-test.switchpayments.com/v2',
         accountId: process.env.SWITCH_ACCOUNT_ID,
         privateKey: process.env.SWITCH_PRIVATE_KEY
+    },
+    stripePayments: {
+        enabled: true,
+        privateKey: 'sk_test_4q5rCVkqyTUe4dQWnQ7rCzY7'
     },
     mailgun: {
         domain: process.env.MAILGUN_DOMAIN,
