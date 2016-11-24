@@ -39,7 +39,7 @@ export default {
     storefront: {
         label: 'yamacity.com',
         baseUrl: 'http://localhost:3000',
-        defaultLocale: 'pt'
+        defaultLocale: 'en'
     },
     switchPayments: {
         enabled: true,
