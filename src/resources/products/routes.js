@@ -127,6 +127,7 @@ export default [
                     stock: Joi.number().required(),
                     tags: Joi.array().required(),
                     collections: Joi.array().required(),
+                    others: Joi.object().required(),
                     metadata: Joi.object().required()
                 }
             }

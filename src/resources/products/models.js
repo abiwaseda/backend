@@ -47,6 +47,10 @@ class Product {
             tags: [],
             collections: [],
             metadata: {},
+            others: {
+                en: "",
+                jp: ""
+            },
             createdAt: new Date()
         };
         let insert = await this.table.insert(obj).run();
@@ -189,7 +193,7 @@ class Product {
      * Update product
      */
     @DBDecorators.table(tables.Product)
-    static async update(productId, {enabled, sku, name, description, images, pricing, stock, tags, collections, metadata}) {
+    static async update(productId, {enabled, sku, name, description, images, pricing, stock, tags, collections, metadata, others}) {
 
         // Validate that SKU does not belong to another product
         if (sku) {
@@ -211,6 +215,7 @@ class Product {
             tags,
             collections,
             metadata,
+            others,
             updatedAt: new Date()
         }).run();
 
@@ -301,6 +306,7 @@ class Product {
                 tags: [],
                 collections: [],
                 metadata: {},
+                others: {},
                 createdAt: new Date()
             };
         })).run();
