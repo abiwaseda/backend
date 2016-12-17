@@ -16,5 +16,8 @@ config.uploads.baseUrl = 'yamacity.com/files';
 config.storefront.baseUrl = 'https://yamacity.com';
 config.switchPayments.baseUrl = 'https://api.switchpayments.com/v2';
 
+config.emails.from.name = 'yamacity.com';
+config.emails.from.email = 'support@yamacity.com';
+
 // Export
 export default config;

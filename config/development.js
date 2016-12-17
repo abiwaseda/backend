@@ -32,8 +32,8 @@ export default {
     },
     emails: {
         from: {
-            name: 'yamacity.com',
-            email: 'support@yamacity.com'
+            name: 'test-yamacity.com',
+            email: 'test-support@yamacity.com'
         }
     },
     storefront: {
