@@ -274,7 +274,7 @@ class OrderEmailHandler {
                 checkout: checkoutSerialized,
                 shippingDetails: checkout.getShippingDetails(),
                 order: order,
-                instrumentDisplay: SwitchPayments.getInstrumentDisplay(instrumentDetails)
+//                instrumentDisplay: SwitchPayments.getInstrumentDisplay(instrumentDetails)
             };
         }
 

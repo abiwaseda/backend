@@ -59,7 +59,7 @@ export default [
                     sku: Joi.string().required(),
                     name: Joi.object({
                         en: Joi.string().required(),
-                        pt: Joi.string().required()
+                        jp: Joi.string().required()
                     }).required()
                 }
             }
@@ -109,11 +109,11 @@ export default [
                     sku: Joi.string().required(),
                     name: Joi.object({
                         en: Joi.string().required(),
-                        pt: Joi.string().required()
+                        jp: Joi.string().required()
                     }).required(),
                     description: Joi.object({
                         en: Joi.string().required(),
-                        pt: Joi.string().required()
+                        jp: Joi.string().required()
                     }).required(),
                     images: Joi.array({
                         url: Joi.string().required()
@@ -127,6 +127,7 @@ export default [
                     stock: Joi.number().required(),
                     tags: Joi.array().required(),
                     collections: Joi.array().required(),
+                    others: Joi.object().required(),
                     metadata: Joi.object().required()
                 }
             }
