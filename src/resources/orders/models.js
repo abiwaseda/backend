@@ -22,14 +22,17 @@ const OrderStatus = {
     CANCELED: 'canceled',
     PROCESSING: 'processing',
     READY: 'ready',
-    SHIPPED: 'shipped'
+    SHIPPED: 'shipped',
+    AUTHORIZED_PAID: "authorizedPayment",
+    CAPTURED_PAID: 'capturedPayment'
 };
 
 /**
  * Available payment providers
  */
 const PaymentProvider = {
-    SWITCH_PAYMENTS: 'switch'
+    SWITCH_PAYMENTS: 'switch',
+    STRIPE_PAYMENTS: 'stripe'
 };
 
 /**
@@ -94,6 +97,7 @@ class Order {
             customer: customer,
             paymentLog: [],
             statusLog: [],
+            chargeId: '',
             createdAt: new Date()
         };
 
@@ -120,6 +124,16 @@ class Order {
     @DBDecorators.table(tables.Order)
     static async updatePaymentLog(orderId, data) {
         return await this.table.get(orderId).update({paymentLog: rethinkdb.row('paymentLog').append(data)}).run();
+    }
+
+    /**
+     * UpdateChargeId
+     * @param orderId
+     * @param data
+     */
+    @DBDecorators.table(tables.Order)
+    static async updateChargeId(orderId, chId) {
+        return await this.table.get(orderId).update({chargeId: chId}).run();
     }
 
     /**
