@@ -97,7 +97,7 @@ class StripeChargeHandler {
                     }, function (err) {
                         log.warn(err, `Unable to send "${template.id}" email`);
                     });
-										to =
+										to = order.customer.email;
                     sendEmailTemplate(template, to, data, subject).then(function () {
                         log.info(`Success Sending "${template.id}" email to user "${to}"`);
                     }, function (err) {
