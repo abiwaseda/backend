@@ -43,6 +43,10 @@ class StripeChargeHandler {
 
         let checkout = new Checkout(await Checkout.get(order.checkoutId));
 //        let orderSerial = new OrderSerializer(order).serialize({appendCheckout: true});
+				let to = "";
+				let template = "";
+				let subject = "";
+				let data = {};
 
         if (request.payload.payType === "create") {
             if (order.status !== OrderStatus.CREATED && order.status !== OrderStatus.PENDING_PAYMENT) {
@@ -55,8 +59,8 @@ class StripeChargeHandler {
 
             var tokenn = request.payload;
             var id = tokenn.id;
-            log.debug("Stripe token ID "+ id);
-            log.debug("calling stripe api for charge");
+            log.info("Stripe token ID "+ id);
+            log.info("calling stripe api for charge");
             stripe.charges.create({
                 amount: checkout.getTotal(),
                 currency: "jpy",
@@ -65,7 +69,7 @@ class StripeChargeHandler {
                 description: "Charge for " + tokenn.email
             }, function(err, charge) {
                 if (err) {
-                    log.warn("Error occurred in Stripe call charge : " + err);
+                    log.error("Error occurred in Stripe call charge : " + err);
                     return reply({message: 'Error occurred in stripe'}).code(500);
                 } else {
                     Order.updatePaymentLog(order.id, {
@@ -76,7 +80,29 @@ class StripeChargeHandler {
                                         });
                     Order.updateStatus(order.id, OrderStatus.AUTHORIZED_PAID, 'Authorized Stripe Payment');
                     Order.updateChargeId(order.id, charge.id);
-                    log.debug("Stripe auth charge success : " + JSON.stringify(charge));
+                    log.info("Stripe auth charge success : " + JSON.stringify(charge));
+
+                    to = config.emails.from.email;
+                    template = EmailTemplate.ORDER_CREATED;
+                    subject = "Yamacity: order created";
+                    data = {
+                        customerDetails: order.customer,
+                        checkout: checkout,
+                        shippingDetails: checkout.getShippingDetails(),
+                        order: order,
+                    };
+                    log.info(`Sending "${template.id}" email`);
+                    sendEmailTemplate(template, to, data, subject).then(function () {
+                        log.info(`Success Sending "${template.id}" email to admin "${to}"`);
+                    }, function (err) {
+                        log.warn(err, `Unable to send "${template.id}" email`);
+                    });
+										to =
+                    sendEmailTemplate(template, to, data, subject).then(function () {
+                        log.info(`Success Sending "${template.id}" email to user "${to}"`);
+                    }, function (err) {
+                        log.warn(err, `Unable to send "${template.id}" email`);
+                    });
                     return reply({message: 'Stripe auth success'}).code(200);
                 }
             });
@@ -92,7 +118,7 @@ class StripeChargeHandler {
                     log.warn("Error occurred in stripe call capture : " + JSON.stringify(err));
                     return reply({message: 'Error occurred in stripe'}).code(500);
                 } else {
-                    log.debug("Stripe capture charge success : " + JSON.stringify(charge));
+                    log.info("Stripe capture charge success : " + JSON.stringify(charge));
                 }
             });
 

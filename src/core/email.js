@@ -45,7 +45,7 @@ const EmailTemplate = {
  */
 function sendEmail(from, to, subject, text, html) {
     return new Promise((resolve, reject) => {
-        log.debug({mailgun: config.mailgun, arguments}, 'Send email');
+        //log.debug({mailgun: config.mailgun, arguments}, 'Send email');
         request.post({
             url: `https://api.mailgun.net/v3/${config.mailgun.domain}/messages`,
             json: true,
@@ -70,7 +70,7 @@ function sendEmail(from, to, subject, text, html) {
  */
 function sendTemplate(template, to, data, subject) {
     return new Promise(function (resolve, reject) {
-        log.debug({template, to, data}, 'sendTemplate');
+        log.debug({template, to}, 'sendTemplate');
         fs.readFile(path.join(process.cwd(), 'src/templates/email', template.fileName), 'utf8', async function (err, source) {
             if (err) {
                 return reject(err);
