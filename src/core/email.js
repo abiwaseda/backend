@@ -70,7 +70,7 @@ function sendEmail(from, to, subject, text, html) {
  */
 function sendTemplate(template, to, data, subject) {
     return new Promise(function (resolve, reject) {
-        log.debug({template, to}, 'sendTemplate');
+        log.debug({template, to, data}, 'sendTemplate');
         fs.readFile(path.join(process.cwd(), 'src/templates/email', template.fileName), 'utf8', async function (err, source) {
             if (err) {
                 return reject(err);

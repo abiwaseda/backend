@@ -43,7 +43,10 @@ class StripeChargeHandler {
 
         let checkout = new Checkout(await Checkout.get(order.checkoutId));
 //        let orderSerial = new OrderSerializer(order).serialize({appendCheckout: true});
-				let to = "";
+        let checkoutSerialized = await new CheckoutSerializer(checkout.model).serialize();
+
+				let toUser = "";
+				let toAdmin = "";
 				let template = "";
 				let subject = "";
 				let data = {};
@@ -82,23 +85,23 @@ class StripeChargeHandler {
                     Order.updateChargeId(order.id, charge.id);
                     log.info("Stripe auth charge success : " + JSON.stringify(charge));
 
-                    to = config.emails.from.email;
+                    toAdmin = config.emails.from.email;
                     template = EmailTemplate.ORDER_CREATED;
                     subject = "Yamacity: order created";
                     data = {
                         customerDetails: order.customer,
-                        checkout: checkout,
+                        checkout: checkoutSerialized,
                         shippingDetails: checkout.getShippingDetails(),
                         order: order,
                     };
                     log.info(`Sending "${template.id}" email`);
-                    sendEmailTemplate(template, to, data, subject).then(function () {
+                    sendEmailTemplate(template, toAdmin, data, subject).then(function () {
                         log.info(`Success Sending "${template.id}" email to admin "${to}"`);
                     }, function (err) {
                         log.warn(err, `Unable to send "${template.id}" email`);
                     });
-										to = order.customer.email;
-                    sendEmailTemplate(template, to, data, subject).then(function () {
+										toUser = order.customer.email;
+                    sendEmailTemplate(template, toUser, data, subject).then(function () {
                         log.info(`Success Sending "${template.id}" email to user "${to}"`);
                     }, function (err) {
                         log.warn(err, `Unable to send "${template.id}" email`);
